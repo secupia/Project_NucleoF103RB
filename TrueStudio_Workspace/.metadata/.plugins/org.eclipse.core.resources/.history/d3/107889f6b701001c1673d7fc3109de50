@@ -1,0 +1,21 @@
+/*
+ * button.c
+ *
+ *  Created on: 2021. 8. 20.
+ *      Author: Marshall
+ */
+
+#include "button.h"
+
+
+void buttonInit(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct;
+
+  GPIO_InitStruct.Mode = GPIO_Mode
+}
+
+bool buttonGetPressed(uint8_t ch)
+{
+
+}

@@ -1,0 +1,129 @@
+/*
+ * uart.c
+ *
+ *  Created on: 2021. 8. 22.
+ *      Author: Marshall
+ */
+
+#include <stdarg.h>
+
+#include "core/qbuffer.h"
+#include "uart.h"
+
+#define UART_MODE_POLLING   0
+#define UART_MODE_INTERRUPT 1
+#define UART_MODE_DMA       2
+
+#define UART_RX_BUF_LENGTH  16
+#define UART_RX_QBUF_LENGTH 256
+
+typedef struct
+{
+  bool  is_open;
+  uint32_t baud;
+  uint8_t tx_mode;
+  uint8_t rx_mode;
+
+  uint8_t rx_buf[UART_RX_BUF_LENGTH];
+  qbuffer_t qbuffer_rx;
+
+  UART_HandleTypeDef handle;
+
+} uart_t;
+
+uart_t uart_tbl[UART_MAX_CH];
+uint8_t uart_rxqbuf[UART_MAX_CH][UART_RX_BUF_LENGTH];
+
+static void uartStartRx(uint8_t channel);
+static void uartRxHandler(uint8_t channel);
+
+void uartInit(void)
+{
+  uint8_t i;
+
+  for(i=0; i<UART_MAX_CH; i++)
+  {
+    uart_tbl[i].is_open = false;
+    uart_tbl[i].rx_mode = UART_MODE_POLLING;
+    uart_tbl[i].tx_mode = UART_MODE_POLLING;
+  }
+}
+
+bool uartOpen(uint8_t channel, uint32_t baud)
+{
+  bool ret = false;
+  uart_t *p_uart;
+
+  switch(channel)
+  {
+    case _DEF_UART1:
+      p_uart = &uart_tbl[channel];
+
+      p_uart->handle.Instance = USART2;
+      p_uart->handle.Init.BaudRate = baud;
+      p_uart->handle.Init.WordLength = UART_WORDLENGTH_8B;
+      p_uart->handle.Init.StopBits = UART_STOPBITS_1;
+      p_uart->handle.Init.Parity = UART_PARITY_NONE;
+      p_uart->handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+      p_uart->handle.Init.Mode = UART_MODE_TX_RX;
+
+      if(HAL_UART_DeInit(&p_uart->handle) != HAL_OK)
+      {
+        break;
+      }
+
+      if(HAL_UART_Init(&p_uart->handle) != HAL_OK)
+      {
+        break;
+      }
+
+      qbufferCreate(&p_uart->qbuffer_rx, uart_rx_qbuf[channel], UART_RX_BUF_LENGTH);
+
+      p_uart->rx_mode = UART_MODE_INTERRUPT;
+      p_uart->baud = baud;
+      p_uart->is_open = true;
+
+      uartStartRx(channel);
+      break;
+  }
+}
+
+bool uartClose(uint8_t channel)
+{
+
+}
+
+uint32_t uartAvailable(uint8_t channel)
+{
+
+}
+
+void uartFlush(uint8_t channel)
+{
+
+}
+
+void uartPutch(uint8_t channel, uint8_t ch)
+{
+
+}
+
+uint8_t uartGetch(uint8_t channel)
+{
+
+}
+
+int32_t uartWrite(uint8_t channel, uint8_t p_data, uint32_t length)
+{
+
+}
+
+uint8_t uartRead(uint8_t channel)
+{
+
+}
+
+int32_t uartPrintf(uint8_t channel, const char *fmt, ...)
+{
+
+}

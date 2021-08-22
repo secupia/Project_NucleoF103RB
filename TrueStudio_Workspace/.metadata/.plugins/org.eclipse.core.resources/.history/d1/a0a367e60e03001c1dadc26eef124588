@@ -1,0 +1,13 @@
+/*
+ * uart.h
+ *
+ *  Created on: 2021. 8. 22.
+ *      Author: Marshall
+ */
+
+#ifndef SRC_HW_CORE_UART_H_
+#define SRC_HW_CORE_UART_H_
+
+
+
+#endif /* SRC_HW_CORE_UART_H_ */

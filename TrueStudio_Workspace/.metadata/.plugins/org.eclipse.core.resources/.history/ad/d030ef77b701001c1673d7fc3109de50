@@ -1,0 +1,12 @@
+/*
+ * button.c
+ *
+ *  Created on: 2021. 8. 20.
+ *      Author: Marshall
+ */
+
+#include "hw_def.h"
+
+void buttonInit(void);
+
+bool buttonGetPressed(uint8_t ch);

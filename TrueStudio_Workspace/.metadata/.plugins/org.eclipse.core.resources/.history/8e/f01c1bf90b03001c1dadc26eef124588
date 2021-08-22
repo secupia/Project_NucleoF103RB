@@ -1,0 +1,44 @@
+/*
+ * qbuffer.c
+ *
+ *  Created on: 2021. 8. 20.
+ *      Author: Marshall
+ */
+
+#include "qbuffer.h"
+
+
+void qbufferInit(void)
+{
+
+}
+
+bool qbufferCreate(qbuffer_t *p_node, uint8_t *p_buf, uint32_t length)
+{
+  bool ret = true;
+
+  p_node->ptr_in = 0;
+  p_node->ptr_out = 0;
+  p_node->length = length;
+  p_node->p_buf = p_buf;
+}
+
+bool qbufferWrite(qbuffer_t *p_node, uint8_t *p_data, uint32_t length)
+{
+
+}
+
+bool qbufferRead(qbuffer_t *p_node, uint8_t *p_data, uint32_t length)
+{
+
+}
+
+uint32_t qbufferAvailable(qbuffer_t *p_node)
+{
+
+}
+
+void qbufferFlush(qbuffer_t *p_node)
+{
+
+}
